@@ -1,3 +1,51 @@
 !sudo apt-get install -y fonts-nanum
 !sudo fc-cache -fv
 !rm ~/.cache/matplotlib -rf
+import os
+os.kill(os.getpid(), 9)
+import pandas as pd
+df=pd.read_excel('코스피(2024).xlsx', index_col=1)
+df.dtypes
+import matplotlib.pyplot as plt
+import pandas as pd
+myplot=df.boxplot(column=['수익률'],by='종목')
+plt.show()
+import matplotlib.pyplot as plt
+import pandas as pd
+custom_order = ['코스피', '삼성중공업', '유한양행', 'LS electric', '한화에어로스페이스', '삼양식품']
+myplot=df.boxplot(column=['수익률'],by='종목', positions=range(len(custom_order)), grid=False)
+plt.xticks(range(len(custom_order)), custom_order)
+plt.suptitle("") 
+plt.xlabel('종목')
+plt.ylabel('수익률(%)')
+plt.title('최근 1년 종목별 수익률')
+plt.show()
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+sns.set_style("whitegrid")
+df = df.rename_axis(index="Stock")
+stock_name_mapping = {
+    '삼성중공업': 'Samsung Heavy industries',
+    '유한양행': 'Yuhan Corporation',
+    '코스피': 'KOSPI',
+    'LS electric': 'LS electric',
+    '한화에어로스페이스': 'Hanwha Aerospace',
+    '삼양식품': 'Samyang Foods'}
+df = df.set_index(df.index.map(stock_name_mapping))
+df
+df.columns=['Date','Returns']
+sns.boxplot(x = 'Stock', y = 'Returns', data = df)
+plt.show()
+sns.boxplot(x = 'Stock', y = 'Returns', data = df)
+plt.xticks(rotation=45, ha='right', wrap=True)
+plt.show()
+flierprops = dict(markerfacecolor='0.8', markersize=4,linestyle='none') # Corrected the typo from 'linestlye' to 'linestyle'
+sns.boxplot(x = 'Stock', y = 'Returns', data = df,flierprops=flierprops )
+plt.xticks(rotation=45, ha='right', wrap=True)
+plt.show()
+flierprops = dict(markerfacecolor='0.8', markersize=4,linestyle='none') # Corrected the typo from 'linestlye' to 'linestyle'
+sns.boxplot(x = 'Stock', y = 'Returns', data = df, flierprops=flierprops, palette='gist_rainbow')
+plt.xticks(rotation=45, ha='right', wrap=True)
+plt.title('Returns')
+plt.show()
